@@ -10,7 +10,7 @@ services:
       - mongo-data:/data/db
 
   app:
-    build: .
+    image: danamostafa/todo-node:latest  # ← image بتاعتك على Docker Hub
     container_name: todo-app
     ports:
       - "4000:4000"
@@ -21,6 +21,22 @@ services:
     environment:
       - mongoDbUrl=mongodb://mongo:27017/todo-db
       - PORT=4000
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=30
+    restart: always
 
 volumes:
   mongo-data:
