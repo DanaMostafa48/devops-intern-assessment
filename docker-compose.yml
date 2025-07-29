@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   mongo:
     image: mongo
@@ -6,6 +8,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - todo-network
 
   app:
     image: danamostafa/todo-node:latest
@@ -20,13 +24,25 @@ services:
     restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - todo-network
 
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    command: --cleanup --label-enable --interval 30 
+      - ~/.docker/config.json:/config.json
+    environment:
+      - WATCHTOWER_USERNAME=${DOCKER_USERNAME}
+      - WATCHTOWER_PASSWORD=${DOCKER_PASSWORD}
+    command: --cleanup --label-enable --interval 30
     restart: always
+    networks:
+      - todo-network
 
 volumes:
   mongo-data:
+
+networks:
+  todo-network:
+    driver: bridge
