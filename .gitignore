@@ -1,1 +1,3 @@
 node_modules/
+Ansible/secrets.yml
+.env
