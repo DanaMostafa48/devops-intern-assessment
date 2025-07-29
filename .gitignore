@@ -1,5 +1,8 @@
 node_modules/
 Ansible/secrets.yml
 .env
+<<<<<<< HEAD
 .env
 .env
+=======
+>>>>>>> 9ba4ba4e606e774b832deb24ecf095fb620ff031
