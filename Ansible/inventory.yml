@@ -1,7 +1,7 @@
 all:
   hosts:
     todo-server:
-      ansible_host: 54.89.254.35
+      ansible_host: 13.48.195.142
       ansible_user: ubuntu
-      ansible_ssh_private_key_file: ~/Downloads/dana.pem
+      ansible_ssh_private_key_file: ~/Downloads/dodo.pem
       ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
