@@ -184,7 +184,7 @@ Todo-List-nodejs/
    ```
 
 2. **Run MongoDB:**
-   ```bash
+   ``` bash
    docker run -d --name mongo -p 27017:27017 mongo
    ```
 
