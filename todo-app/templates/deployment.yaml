@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  labels:
+    app: todo-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: todo-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          env:
+            - name: PORT
+              value: "{{ .Values.app.port }}"
+            - name: mongoDbUrl
+              value: "{{ .Values.app.mongoDbUrl }}"
+            - name: NODE_ENV
+              value: "{{ .Values.app.nodeEnv }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }} 

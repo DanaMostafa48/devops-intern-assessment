@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  # Repository configuration
+  repositories: |
+    - url: https://github.com/DanaMostafa48/k8s
+      name: k8s
+      type: git
+      insecure: false
+      enableLFS: true
+    
+  # Admin configuration
+  admin.enabled: "true"
+  
+  # Repository server configuration
+  repo.server.timeout: "60s"
+  repo.server.max.concurrent.repos: "10"
+  
+  # Application controller configuration
+  application.instanceLabelKey: "argocd.argoproj.io/instance"
+  
+  # Server configuration
+  server.insecure: "false"
+  server.disable.auth: "false"
+  
+  # RBAC configurations
+  rbac.create: "true"
+  
+  # Notifications configuration
+  notifications.enabled: "true" 

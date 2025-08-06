@@ -27,6 +27,17 @@ app.use(express.urlencoded());
 // set up the static files
 app.use(express.static('assets'));
 
+// Add health check endpoint
+app.get('/health', (req, res) => {
+    // Check MongoDB connection status
+    const mongoStatus = db.readyState === 1 ? 'connected' : 'disconnected';
+    res.status(200).json({ 
+        status: 'OK', 
+        message: 'Server is running',
+        mongo: mongoStatus,
+        timestamp: new Date().toISOString()
+    });
+});
 
 // registering the user in the database
 app.post('/register', (req, res) => {
@@ -81,7 +92,6 @@ app.get('/complete-task', function(req,res){
     });
 });
 
-
 // deleting the task to the database
 app.get('/delete-task', function(req,res){
     let id = req.query.id;
@@ -94,13 +104,34 @@ app.get('/delete-task', function(req,res){
         console.log("Error Deleting Task!!", err);
         res.redirect('back');
     });
-
 });
 
+// Add graceful shutdown
+process.on('SIGTERM', () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('SIGINT received, shutting down gracefully');
+    process.exit(0);
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+    console.log('Uncaught Exception:', err);
+    // Don't exit, just log the error
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+    // Don't exit, just log the error
+});
 
 app.listen(port,(err) => {
     if (err) {
         console.log(`Error: ${err}`);
+        process.exit(1);
     }
     console.log(`Yupp! Server is running on port ${port}`);
-})
+});

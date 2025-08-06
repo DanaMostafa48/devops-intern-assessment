@@ -1,0 +1,4 @@
+applicationController:
+  env:
+    - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
+      value: "default,todo,staging,argocd"

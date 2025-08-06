@@ -1,0 +1,16 @@
+apiVersion: v2
+name: todo-app
+description: A Helm chart for Todo List Node.js application with MongoDB
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - todo
+  - nodejs
+  - mongodb
+home: https://github.com/DanaMostafa48/Todo-List-nodejs
+sources:
+  - https://github.com/DanaMostafa48/Todo-List-nodejs
+maintainers:
+  - name: Dana Mostafa
+    email: dana@example.com
