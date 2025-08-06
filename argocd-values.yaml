@@ -1,0 +1,21 @@
+configs:
+  params:
+    server.insecure: true
+  secret:
+    argocdServerAdminPassword: "$2a$10$eRZOj02UBJkDTe8vEqsUp.F3iIavNDyZkOQddINM5rWtekrM74tB6"
+  cm:
+    url: https://localhost:8080
+    admin.enabled: "true"
+    application.instanceLabelKey: argocd.argoproj.io/instance
+    application.sync.impersonation.enabled: "false"
+    exec.enabled: "false"
+    server.rbac.log.enforce.enable: "false"
+    statusbadge.enabled: "false"
+    timeout.hard.reconciliation: 0s
+    timeout.reconciliation: 180s
+
+server:
+  extraArgs:
+    - --insecure
+  service:
+    type: ClusterIP 

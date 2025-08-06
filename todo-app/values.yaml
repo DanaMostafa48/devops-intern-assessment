@@ -1,0 +1,45 @@
+# Todo App Configuration
+replicaCount: 2
+
+# Application Image
+image:
+  repository: danamostafa/todo-node
+  tag: "latest"
+
+# Image Pull Secrets
+imagePullSecrets:
+  - name: regcred
+
+# Service Configuration
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 4000
+
+# Application Resources
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# MongoDB Configuration
+mongodb:
+  enabled: true
+  image: mongo:latest
+  storageSize: 1Gi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# Application Environment
+app:
+  port: 4000
+  mongoDbUrl: "mongodb://todo-app-mongo:27017/todo-db"
+  nodeEnv: "production"
